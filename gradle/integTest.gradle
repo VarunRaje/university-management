@@ -1,7 +1,7 @@
 sourceSets {
     integTest {
         java.srcDir file('src/integTest/java')
-        resources.srcDir file('src/integTest/resources')
+        resources.srcDirs = [file('src/integTest/resources')]
         compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
         runtimeClasspath += output + compileClasspath
     }
