@@ -22,6 +22,7 @@ ext.deps = [
         springBootStarterWebMvc      : 'org.springframework.boot:spring-boot-starter-webmvc',
         jakartaAnnotationApi         : 'jakarta.annotation:jakarta.annotation-api',
         jakartaValidationApi         : 'jakarta.validation:jakarta.validation-api',
+        lombok                       : 'org.projectlombok:lombok',
         postgresql                   : 'org.postgresql:postgresql',
         springdocOpenapiStarterWebmvc: 'org.springdoc:springdoc-openapi-starter-webmvc-ui',
         swaggerAnnotationsJakarta    : "io.swagger.core.v3:swagger-annotations-jakarta:${versions.swaggerAnnotations}",

@@ -14,7 +14,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(
     name = "enrollments",
@@ -60,61 +62,5 @@ public class EnrollmentEntity {
   @PreUpdate
   void preUpdate() {
     updatedAt = Instant.now();
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
-  }
-
-  public StudentEntity getStudent() {
-    return student;
-  }
-
-  public void setStudent(StudentEntity student) {
-    this.student = student;
-  }
-
-  public CourseEntity getCourse() {
-    return course;
-  }
-
-  public void setCourse(CourseEntity course) {
-    this.course = course;
-  }
-
-  public String getSemester() {
-    return semester;
-  }
-
-  public void setSemester(String semester) {
-    this.semester = semester;
-  }
-
-  public EnrollmentStatusEntity getStatus() {
-    return status;
-  }
-
-  public void setStatus(EnrollmentStatusEntity status) {
-    this.status = status;
-  }
-
-  public Instant getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Instant createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public Instant getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Instant updatedAt) {
-    this.updatedAt = updatedAt;
   }
 }

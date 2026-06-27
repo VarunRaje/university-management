@@ -1,4 +1,4 @@
-package com.university.management.service.transformer;
+package com.university.management.transformer;
 
 import com.university.management.common.model.CourseResponse;
 import com.university.management.common.model.EnrollmentResponse;

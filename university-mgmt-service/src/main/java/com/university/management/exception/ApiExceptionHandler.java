@@ -1,4 +1,4 @@
-package com.university.management.service.exception;
+package com.university.management.exception;
 
 import com.university.management.common.model.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;

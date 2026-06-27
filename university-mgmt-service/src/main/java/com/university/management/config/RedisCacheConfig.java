@@ -1,4 +1,4 @@
-package com.university.management.service.config;
+package com.university.management.config;
 
 import java.time.Duration;
 import org.springframework.cache.annotation.EnableCaching;

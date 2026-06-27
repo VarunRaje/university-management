@@ -1,4 +1,4 @@
-package com.university.management.service.service;
+package com.university.management.service;
 
 import com.university.management.common.model.EnrollmentRequest;
 import com.university.management.common.model.EnrollmentResponse;
@@ -9,31 +9,22 @@ import com.university.management.dao.entity.StudentEntity;
 import com.university.management.dao.repository.CourseRepository;
 import com.university.management.dao.repository.EnrollmentRepository;
 import com.university.management.dao.repository.StudentRepository;
-import com.university.management.service.exception.ResourceConflictException;
-import com.university.management.service.exception.ResourceNotFoundException;
-import com.university.management.service.transformer.UniversityTransformer;
+import com.university.management.exception.ResourceConflictException;
+import com.university.management.exception.ResourceNotFoundException;
+import com.university.management.transformer.UniversityTransformer;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class EnrollmentManagementService {
 
   private final EnrollmentRepository enrollmentRepository;
   private final StudentRepository studentRepository;
   private final CourseRepository courseRepository;
   private final UniversityTransformer mapper;
-
-  public EnrollmentManagementService(
-      EnrollmentRepository enrollmentRepository,
-      StudentRepository studentRepository,
-      CourseRepository courseRepository,
-      UniversityTransformer mapper) {
-    this.enrollmentRepository = enrollmentRepository;
-    this.studentRepository = studentRepository;
-    this.courseRepository = courseRepository;
-    this.mapper = mapper;
-  }
 
   @Transactional
   public EnrollmentResponse enrollStudent(EnrollmentRequest request) {

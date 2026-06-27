@@ -1,4 +1,4 @@
-package com.university.management.service.service;
+package com.university.management.service;
 
 import com.university.management.common.model.StudentCreateRequest;
 import com.university.management.common.model.StudentResponse;
@@ -7,28 +7,24 @@ import com.university.management.common.model.StudentUpdateRequest;
 import com.university.management.dao.entity.StudentEntity;
 import com.university.management.dao.entity.StudentStatusEntity;
 import com.university.management.dao.repository.StudentRepository;
-import com.university.management.service.exception.ResourceConflictException;
-import com.university.management.service.exception.ResourceNotFoundException;
-import com.university.management.service.transformer.UniversityTransformer;
+import com.university.management.exception.ResourceConflictException;
+import com.university.management.exception.ResourceNotFoundException;
+import com.university.management.transformer.UniversityTransformer;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class StudentManagementService {
 
   private final StudentRepository studentRepository;
   private final UniversityTransformer mapper;
-
-  public StudentManagementService(
-      StudentRepository studentRepository, UniversityTransformer mapper) {
-    this.studentRepository = studentRepository;
-    this.mapper = mapper;
-  }
 
   @Transactional
   public StudentResponse createStudent(StudentCreateRequest request) {

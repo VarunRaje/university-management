@@ -1,4 +1,4 @@
-package com.university.management.service.service;
+package com.university.management.service;
 
 import com.university.management.common.model.HealthResponse;
 import com.university.management.common.model.ServiceInfoResponse;

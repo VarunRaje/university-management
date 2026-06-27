@@ -9,6 +9,7 @@ sourceSets {
 dependencies {
 	implementation project(':university-mgmt-common')
 	implementation project(':university-mgmt-dao')
+	compileOnly deps.lombok
 	implementation deps.springBootStarterCache
 	implementation deps.springBootStarterDataJpa
 	implementation deps.springBootStarterDataRedis
@@ -16,6 +17,7 @@ dependencies {
 	implementation deps.springBootStarterLiquibase
 	implementation deps.springBootStarterValidation
 	implementation deps.springBootStarterWebMvc
+	annotationProcessor deps.lombok
 	runtimeOnly deps.postgresql
 
 	testImplementation project(':university-mgmt-common')

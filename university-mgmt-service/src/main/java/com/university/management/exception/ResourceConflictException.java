@@ -1,4 +1,4 @@
-package com.university.management.service.exception;
+package com.university.management.exception;
 
 public class ResourceConflictException extends RuntimeException {
 

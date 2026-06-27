@@ -3,11 +3,11 @@ package com.university.management.controller;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+import com.university.management.UniversityManagementApplication;
 import com.university.management.common.model.CourseCreateRequest;
 import com.university.management.common.model.CourseResponse;
 import com.university.management.common.model.StudentCreateRequest;
 import com.university.management.common.model.StudentResponse;
-import com.university.management.service.UniversityManagementApplication;
 import java.time.LocalDate;
 import java.util.UUID;
 import org.springframework.boot.test.context.SpringBootTest;
