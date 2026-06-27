@@ -1,0 +1,12 @@
+.git
+.gradle
+.gradle-user-home
+build
+**/build
+!university-mgmt-service/build
+!university-mgmt-service/build/libs
+!university-mgmt-service/build/libs/*.jar
+.idea
+*.iml
+*.log
+.DS_Store

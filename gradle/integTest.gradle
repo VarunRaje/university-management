@@ -1,0 +1,58 @@
+sourceSets {
+    integTest {
+        java.srcDir file('src/integTest/java')
+        resources.srcDir file('src/integTest/resources')
+        compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+configurations {
+    integTestImplementation.extendsFrom testImplementation
+    integTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+tasks.register('integTest', Test) {
+    def testNgSuiteFile = file('src/integTest/resources/testng.xml')
+
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    shouldRunAfter tasks.named('test')
+    inputs.file(testNgSuiteFile).optional()
+    useTestNG {
+        if (testNgSuiteFile.exists()) {
+            suiteXmlFiles = [testNgSuiteFile]
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('integTest')
+}
+
+if (project.name == 'university-mgmt-service') {
+    def keepIntegContainers = providers.gradleProperty('keepIntegContainers')
+
+    tasks.register('composeIntegTestUp', Exec) {
+        description = 'Starts Postgres and Redis for integration tests.'
+        group = 'verification'
+        workingDir rootProject.projectDir
+        commandLine 'docker', 'compose', '--project-directory', rootProject.projectDir.absolutePath, '-f', 'docker/docker-compose.integ-test.yml', 'up', '-d', '--wait'
+    }
+
+    tasks.register('composeIntegTestDown', Exec) {
+        description = 'Stops Postgres and Redis used by integration tests.'
+        group = 'verification'
+        workingDir rootProject.projectDir
+        commandLine 'docker', 'compose', '--project-directory', rootProject.projectDir.absolutePath, '-f', 'docker/docker-compose.integ-test.yml', 'down', '-v'
+        onlyIf { !keepIntegContainers.present }
+    }
+
+    tasks.named('integTest') {
+        dependsOn tasks.named('composeIntegTestUp')
+        finalizedBy tasks.named('composeIntegTestDown')
+        systemProperty 'spring.profiles.active', 'integtest'
+    }
+}

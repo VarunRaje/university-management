@@ -1,0 +1,13 @@
+apply from: "${rootDir}/gradle/openapi-code-generator.gradle"
+
+dependencies {
+	api deps.springBootStarterValidation
+	api deps.springBootStarterWebMvc
+	api deps.jakartaAnnotationApi
+	api deps.jakartaValidationApi
+	api deps.swaggerAnnotationsJakarta
+}
+
+jar {
+	enabled = true
+}

@@ -1,0 +1,29 @@
+apply plugin: 'org.springframework.boot'
+
+sourceSets {
+	main {
+		resources.srcDir file('conf')
+	}
+}
+
+dependencies {
+	implementation project(':university-mgmt-common')
+	implementation project(':university-mgmt-dao')
+	implementation deps.springBootStarterCache
+	implementation deps.springBootStarterDataJpa
+	implementation deps.springBootStarterDataRedis
+	implementation deps.springBootStarterJackson
+	implementation deps.springBootStarterLiquibase
+	implementation deps.springBootStarterValidation
+	implementation deps.springBootStarterWebMvc
+	runtimeOnly deps.postgresql
+
+	testImplementation project(':university-mgmt-common')
+	testImplementation project(':university-mgmt-dao')
+	integTestImplementation project(':university-mgmt-common')
+	integTestImplementation project(':university-mgmt-dao')
+}
+
+bootJar {
+	archiveFileName = "university-mgmt-service-${project.version}.jar"
+}

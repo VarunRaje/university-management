@@ -1,0 +1,29 @@
+ext.versions = [
+        java            : '25',
+        springBoot      : '4.1.0',
+        foojayResolver  : '1.0.0',
+        openapiGenerator: '7.23.0',
+        spotless        : '8.0.0',
+        checkstyle      : '11.0.1',
+        googleJavaFormat: '1.28.0',
+        swaggerAnnotations: '2.2.42',
+        testng          : '7.11.0'
+]
+
+ext.deps = [
+        springBootStarterCache       : 'org.springframework.boot:spring-boot-starter-cache',
+        springBootStarterDataJpa     : 'org.springframework.boot:spring-boot-starter-data-jpa',
+        springBootStarterDataRedis   : 'org.springframework.boot:spring-boot-starter-data-redis',
+        springBootStarterJackson     : 'org.springframework.boot:spring-boot-starter-jackson',
+        springBootStarterLiquibase   : 'org.springframework.boot:spring-boot-starter-liquibase',
+        springBootStarterRestClient  : 'org.springframework.boot:spring-boot-starter-restclient',
+        springBootStarterTest        : 'org.springframework.boot:spring-boot-starter-test',
+        springBootStarterValidation  : 'org.springframework.boot:spring-boot-starter-validation',
+        springBootStarterWebMvc      : 'org.springframework.boot:spring-boot-starter-webmvc',
+        jakartaAnnotationApi         : 'jakarta.annotation:jakarta.annotation-api',
+        jakartaValidationApi         : 'jakarta.validation:jakarta.validation-api',
+        postgresql                   : 'org.postgresql:postgresql',
+        springdocOpenapiStarterWebmvc: 'org.springdoc:springdoc-openapi-starter-webmvc-ui',
+        swaggerAnnotationsJakarta    : "io.swagger.core.v3:swagger-annotations-jakarta:${versions.swaggerAnnotations}",
+        testng                       : "org.testng:testng:${versions.testng}"
+]

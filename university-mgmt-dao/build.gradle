@@ -1,0 +1,9 @@
+dependencies {
+	api deps.springBootStarterDataJpa
+	implementation deps.springBootStarterValidation
+	runtimeOnly deps.postgresql
+}
+
+jar {
+	enabled = true
+}

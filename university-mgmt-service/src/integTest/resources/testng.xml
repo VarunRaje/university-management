@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="university-management-integration-tests" verbose="1">
+    <test name="controller-integration-tests">
+        <classes>
+            <class name="com.university.management.controller.SystemControllerIntegTest"/>
+            <class name="com.university.management.controller.StudentControllerIntegTest"/>
+            <class name="com.university.management.controller.CourseControllerIntegTest"/>
+            <class name="com.university.management.controller.EnrollmentControllerIntegTest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,94 @@
+buildscript {
+    apply from: "${rootDir}/gradle/dependency.gradle"
+
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${versions.springBoot}"
+        classpath "com.diffplug.spotless:com.diffplug.spotless.gradle.plugin:${versions.spotless}"
+        classpath "org.openapitools:openapi-generator-gradle-plugin:${versions.openapiGenerator}"
+    }
+}
+
+plugins {
+    id 'base'
+}
+
+apply from: "${rootDir}/gradle/dependency.gradle"
+
+allprojects {
+    group = 'com.university.management'
+    version = '0.1.0-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.diffplug.spotless'
+    apply from: "${rootDir}/gradle/integTest.gradle"
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(versions.java as int)
+        }
+    }
+
+    dependencies {
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${versions.springBoot}")
+        annotationProcessor platform("org.springframework.boot:spring-boot-dependencies:${versions.springBoot}")
+        testImplementation platform("org.springframework.boot:spring-boot-dependencies:${versions.springBoot}")
+        integTestImplementation platform("org.springframework.boot:spring-boot-dependencies:${versions.springBoot}")
+
+        testImplementation deps.springBootStarterTest
+        testImplementation deps.testng
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = versions.java as int
+    }
+
+    tasks.withType(Test).configureEach {
+        useTestNG()
+        testLogging {
+            events 'failed', 'skipped'
+            exceptionFormat 'full'
+        }
+    }
+
+    checkstyle {
+        toolVersion = versions.checkstyle
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+        showViolations = true
+    }
+
+    def generatedSourcesDir = layout.buildDirectory.dir('generated').get().asFile.toPath()
+    tasks.withType(Checkstyle).configureEach {
+        source = source.filter { file -> !file.toPath().startsWith(generatedSourcesDir) }
+    }
+
+    spotless {
+        java {
+            target 'src/**/*.java'
+            googleJavaFormat(versions.googleJavaFormat)
+            importOrder()
+            removeUnusedImports()
+            formatAnnotations()
+        }
+        groovyGradle {
+            target '*.gradle', 'gradle/*.gradle'
+            greclipse()
+        }
+    }
+}
+
+tasks.register('printVersionCatalog') {
+    group = 'help'
+    description = 'Prints dependency and plugin versions centralized in gradle/dependency.gradle.'
+    doLast {
+        versions.each { key, value -> println "${key}=${value}" }
+    }
+}

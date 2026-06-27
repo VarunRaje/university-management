@@ -1,0 +1,415 @@
+openapi: 3.0.3
+info:
+  title: University Management API
+  version: 0.1.0
+  description: REST API for university management.
+servers:
+  - url: /api/v1
+tags:
+  - name: System
+  - name: Students
+  - name: Courses
+  - name: Enrollments
+paths:
+  /health:
+    get:
+      tags: [System]
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service health status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /info:
+    get:
+      tags: [System]
+      operationId: getServiceInfo
+      responses:
+        '200':
+          description: Service metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfoResponse'
+  /students:
+    get:
+      tags: [Students]
+      operationId: listStudents
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/StudentStatus'
+      responses:
+        '200':
+          description: Students matching the optional status filter.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentResponse'
+    post:
+      tags: [Students]
+      operationId: createStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentCreateRequest'
+      responses:
+        '201':
+          description: Student created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /students/{studentId}:
+    get:
+      tags: [Students]
+      operationId: getStudent
+      parameters:
+        - $ref: '#/components/parameters/StudentId'
+      responses:
+        '200':
+          description: Student details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Students]
+      operationId: updateStudent
+      parameters:
+        - $ref: '#/components/parameters/StudentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentUpdateRequest'
+      responses:
+        '200':
+          description: Student updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /courses:
+    get:
+      tags: [Courses]
+      operationId: listCourses
+      responses:
+        '200':
+          description: Courses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseResponse'
+    post:
+      tags: [Courses]
+      operationId: createCourse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseCreateRequest'
+      responses:
+        '201':
+          description: Course created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseResponse'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /courses/{courseId}:
+    get:
+      tags: [Courses]
+      operationId: getCourse
+      parameters:
+        - $ref: '#/components/parameters/CourseId'
+      responses:
+        '200':
+          description: Course details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /enrollments:
+    post:
+      tags: [Enrollments]
+      operationId: enrollStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnrollmentRequest'
+      responses:
+        '201':
+          description: Enrollment created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /enrollments/{enrollmentId}:
+    get:
+      tags: [Enrollments]
+      operationId: getEnrollment
+      parameters:
+        - $ref: '#/components/parameters/EnrollmentId'
+      responses:
+        '200':
+          description: Enrollment details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    StudentId:
+      name: studentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    CourseId:
+      name: courseId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    EnrollmentId:
+      name: enrollmentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Request conflicts with existing data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: UP
+    ServiceInfoResponse:
+      type: object
+      required: [serviceName, springVersion]
+      properties:
+        serviceName:
+          type: string
+          example: university-management-service
+        springVersion:
+          type: string
+          example: 4.1.0
+    StudentStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE, GRADUATED, SUSPENDED]
+    EnrollmentStatus:
+      type: string
+      enum: [ENROLLED, COMPLETED, DROPPED]
+    StudentCreateRequest:
+      type: object
+      required: [firstName, lastName, email, dateOfBirth]
+      properties:
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        dateOfBirth:
+          type: string
+          format: date
+    StudentUpdateRequest:
+      type: object
+      required: [firstName, lastName, email, dateOfBirth, status]
+      properties:
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        dateOfBirth:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/StudentStatus'
+    StudentResponse:
+      type: object
+      required: [id, studentNumber, firstName, lastName, email, dateOfBirth, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/StudentStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CourseCreateRequest:
+      type: object
+      required: [code, title, credits, department]
+      properties:
+        code:
+          type: string
+          minLength: 2
+          maxLength: 30
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        credits:
+          type: integer
+          minimum: 1
+          maximum: 10
+        department:
+          type: string
+          minLength: 1
+          maxLength: 120
+    CourseResponse:
+      type: object
+      required: [id, code, title, credits, department, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        title:
+          type: string
+        credits:
+          type: integer
+        department:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    EnrollmentRequest:
+      type: object
+      required: [studentId, courseId, semester]
+      properties:
+        studentId:
+          type: string
+          format: uuid
+        courseId:
+          type: string
+          format: uuid
+        semester:
+          type: string
+          minLength: 4
+          maxLength: 30
+    EnrollmentResponse:
+      type: object
+      required: [id, studentId, studentNumber, courseId, courseCode, semester, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        studentNumber:
+          type: string
+        courseId:
+          type: string
+          format: uuid
+        courseCode:
+          type: string
+        semester:
+          type: string
+        status:
+          $ref: '#/components/schemas/EnrollmentStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      required: [timestamp, status, error, message, path]
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string

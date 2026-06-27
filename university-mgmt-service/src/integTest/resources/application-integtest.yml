@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/university_mgmt
+    username: university
+    password: university
+  data:
+    redis:
+      host: localhost
+      port: 16379
+  jpa:
+    show-sql: false

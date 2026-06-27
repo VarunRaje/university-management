@@ -1,0 +1,9 @@
+dependencies {
+	api project(':university-mgmt-common')
+	implementation deps.springBootStarterRestClient
+	implementation deps.springBootStarterValidation
+}
+
+jar {
+	enabled = true
+}
