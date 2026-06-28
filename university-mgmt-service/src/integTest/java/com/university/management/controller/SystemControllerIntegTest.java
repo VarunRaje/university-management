@@ -3,12 +3,13 @@ package com.university.management.controller;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
-import com.university.management.common.model.HealthResponse;
-import com.university.management.common.model.ServiceInfoResponse;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
+
+import com.university.management.common.model.HealthResponse;
+import com.university.management.common.model.ServiceInfoResponse;
 
 public class SystemControllerIntegTest extends AbstractControllerIntegTest {
 

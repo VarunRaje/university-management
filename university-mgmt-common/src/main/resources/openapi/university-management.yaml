@@ -251,7 +251,7 @@ components:
       enum: [ENROLLED, COMPLETED, DROPPED]
     StudentCreateRequest:
       type: object
-      required: [firstName, lastName, email, dateOfBirth]
+      required: [firstName, lastName, email, dateOfBirth, currentAddress]
       properties:
         firstName:
           type: string
@@ -268,6 +268,31 @@ components:
         dateOfBirth:
           type: string
           format: date
+        currentAddress:
+          $ref: '#/components/schemas/Address'
+        permanentAddress:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        buildingNumber:
+          type: string
+          maxLength: 100
+        street:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        state:
+          type: string
+          maxLength: 100
+        pinCode:
+          type: string
+          maxLength: 8
+        country:
+          type: string
+          maxLength: 100
     StudentUpdateRequest:
       type: object
       required: [firstName, lastName, email, dateOfBirth, status]

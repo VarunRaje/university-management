@@ -1,5 +1,11 @@
 package com.university.management.transformer;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
+import org.springframework.stereotype.Component;
+
 import com.university.management.common.model.CourseResponse;
 import com.university.management.common.model.EnrollmentResponse;
 import com.university.management.common.model.EnrollmentStatus;
@@ -10,10 +16,6 @@ import com.university.management.dao.entity.EnrollmentEntity;
 import com.university.management.dao.entity.EnrollmentStatusEntity;
 import com.university.management.dao.entity.StudentEntity;
 import com.university.management.dao.entity.StudentStatusEntity;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import org.springframework.stereotype.Component;
 
 @Component
 public class UniversityTransformer {

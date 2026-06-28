@@ -1,5 +1,14 @@
 package com.university.management.service;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.university.management.common.model.StudentCreateRequest;
 import com.university.management.common.model.StudentResponse;
 import com.university.management.common.model.StudentStatus;
@@ -10,14 +19,8 @@ import com.university.management.dao.repository.StudentRepository;
 import com.university.management.exception.ResourceConflictException;
 import com.university.management.exception.ResourceNotFoundException;
 import com.university.management.transformer.UniversityTransformer;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

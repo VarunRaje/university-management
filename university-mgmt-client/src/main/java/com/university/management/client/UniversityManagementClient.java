@@ -1,5 +1,13 @@
 package com.university.management.client;
 
+import java.net.URI;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestClient;
+
 import com.university.management.common.model.CourseCreateRequest;
 import com.university.management.common.model.CourseResponse;
 import com.university.management.common.model.EnrollmentRequest;
@@ -7,12 +15,6 @@ import com.university.management.common.model.EnrollmentResponse;
 import com.university.management.common.model.StudentCreateRequest;
 import com.university.management.common.model.StudentResponse;
 import com.university.management.common.model.StudentStatus;
-import java.net.URI;
-import java.util.List;
-import java.util.UUID;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
-import org.springframework.web.client.RestClient;
 
 public class UniversityManagementClient {
 

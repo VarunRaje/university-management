@@ -4,15 +4,17 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-import com.university.management.common.model.StudentResponse;
-import com.university.management.common.model.StudentStatus;
-import com.university.management.common.model.StudentUpdateRequest;
 import java.time.LocalDate;
 import java.util.Arrays;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
+
+import com.university.management.common.model.StudentResponse;
+import com.university.management.common.model.StudentStatus;
+import com.university.management.common.model.StudentUpdateRequest;
 
 public class StudentControllerIntegTest extends AbstractControllerIntegTest {
 

@@ -1,10 +1,11 @@
 package com.university.management.service;
 
-import com.university.management.common.model.HealthResponse;
-import com.university.management.common.model.ServiceInfoResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.stereotype.Service;
+
+import com.university.management.common.model.HealthResponse;
+import com.university.management.common.model.ServiceInfoResponse;
 
 @Service
 public class SystemManagementService {

@@ -1,18 +1,21 @@
 package com.university.management.controller;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.university.management.common.api.StudentsApi;
 import com.university.management.common.model.StudentCreateRequest;
 import com.university.management.common.model.StudentResponse;
 import com.university.management.common.model.StudentStatus;
 import com.university.management.common.model.StudentUpdateRequest;
 import com.university.management.service.StudentManagementService;
-import java.util.List;
-import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")

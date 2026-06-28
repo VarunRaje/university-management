@@ -1,5 +1,9 @@
 package com.university.management.dao.entity;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,9 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.UUID;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import lombok.Data;
 
 @Data
@@ -40,6 +45,14 @@ public class StudentEntity {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, length = 30)
   private StudentStatusEntity status = StudentStatusEntity.ACTIVE;
+
+  @Column(name = "permanant_address", columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
+  private Address permanantAddress;
+
+  @Column(name = "current_address", columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
+  private Address currentAddress;
 
   @Column(name = "created_at", nullable = false, updatable = false)
   private Instant createdAt;

@@ -1,11 +1,13 @@
 package com.university.management.dao.repository;
 
-import com.university.management.dao.entity.StudentEntity;
-import com.university.management.dao.entity.StudentStatusEntity;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.university.management.dao.entity.StudentEntity;
+import com.university.management.dao.entity.StudentStatusEntity;
 
 public interface StudentRepository extends JpaRepository<StudentEntity, UUID> {
 
