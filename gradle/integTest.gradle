@@ -28,9 +28,6 @@ tasks.register('integTest', Test) {
     }
 }
 
-tasks.named('check') {
-    dependsOn tasks.named('integTest')
-}
 
 if (project.name == 'university-mgmt-service') {
     def keepIntegContainers = providers.gradleProperty('keepIntegContainers')

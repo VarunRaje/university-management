@@ -4,11 +4,13 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-import com.university.management.common.model.CourseResponse;
 import java.util.Arrays;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
+
+import com.university.management.common.model.CourseResponse;
 
 public class CourseControllerIntegTest extends AbstractControllerIntegTest {
 

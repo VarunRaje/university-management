@@ -1,9 +1,11 @@
 package com.university.management.dao.repository;
 
-import com.university.management.dao.entity.CourseEntity;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.university.management.dao.entity.CourseEntity;
 
 public interface CourseRepository extends JpaRepository<CourseEntity, UUID> {
 

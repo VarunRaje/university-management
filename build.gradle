@@ -24,7 +24,13 @@ allprojects {
     version = '0.1.0-SNAPSHOT'
 }
 
+def testResultLoggerProvider = gradle.sharedServices.registerIfAbsent("testResultLogger", TestResultLoggerService) {
+    // no parameters
+}
+
 subprojects {
+    ext.versions = rootProject.versions
+    ext.deps = rootProject.deps
     apply plugin: 'java-library'
     apply plugin: 'checkstyle'
     apply plugin: 'com.diffplug.spotless'
@@ -55,8 +61,28 @@ subprojects {
         useTestNG()
         testLogging {
             events 'failed', 'skipped'
-            exceptionFormat 'full'
+            exceptionFormat = 'full'
         }
+        usesService(testResultLoggerProvider)
+        def projectName = project.name
+        def taskName = name
+        addTestListener([
+            beforeSuite: { desc -> },
+            afterSuite: { desc, result ->
+                if (!desc.parent) {
+                    testResultLoggerProvider.get().logResult(
+                        projectName,
+                        taskName,
+                        result.testCount,
+                        result.successfulTestCount,
+                        result.failedTestCount,
+                        result.skippedTestCount
+                    )
+                }
+            },
+            beforeTest: { desc -> },
+            afterTest: { desc, result -> }
+        ] as org.gradle.api.tasks.testing.TestListener)
     }
 
     checkstyle {
@@ -72,15 +98,31 @@ subprojects {
 
     spotless {
         java {
-            target 'src/**/*.java'
+            target project.fileTree(project.projectDir) {
+                include 'src/main/java/**/*.java'
+                include 'src/integTest/java/**/*.java'
+                include 'src/test/java/**/*.java'
+                include 'src/generated/java/**/*.*'
+            }
             googleJavaFormat(versions.googleJavaFormat)
-            importOrder()
+            importOrder 'java', 'jakarta', 'org', 'com', ''
             removeUnusedImports()
+            leadingTabsToSpaces()
+            trimTrailingWhitespace()
             formatAnnotations()
         }
         groovyGradle {
             target '*.gradle', 'gradle/*.gradle'
             greclipse()
+        }
+    }
+
+    tasks.configureEach { task ->
+        if (task.name.startsWith('spotless')) {
+            task.enabled = false
+        }
+        if (task.name == 'build' || task.name == 'test' || task.name == 'check' || task.name == 'integTest') {
+            task.finalizedBy ':printTestResults'
         }
     }
 }
@@ -90,5 +132,41 @@ tasks.register('printVersionCatalog') {
     description = 'Prints dependency and plugin versions centralized in gradle/dependency.gradle.'
     doLast {
         versions.each { key, value -> println "${key}=${value}" }
+    }
+}
+
+tasks.register('printTestResults') {
+    usesService(testResultLoggerProvider)
+    doLast {
+        def reports = testResultLoggerProvider.get().getReports()
+        if (!reports.isEmpty()) {
+            println "\n=== Combined Test Results ==="
+            reports.each { println it }
+            println "=============================\n"
+        }
+    }
+}
+
+tasks.configureEach { task ->
+    if (task.name == 'build' || task.name == 'test' || task.name == 'check' || task.name == 'integTest') {
+        task.finalizedBy 'printTestResults'
+    }
+}
+
+abstract class TestResultLoggerService implements org.gradle.api.services.BuildService<org.gradle.api.services.BuildServiceParameters.None> {
+    private final java.util.List<String> reports = java.util.Collections.synchronizedList(new java.util.ArrayList<>())
+
+    void logResult(String project, String task, long total, long passed, long failed, long skipped) {
+        reports.add(
+            "Test results for ${project}:${task}:\n" +
+            "  Total tests: ${total}\n" +
+            "  Passed:      ${passed}\n" +
+            "  Failed:      ${failed}\n" +
+            "  Skipped:     ${skipped}"
+        )
+    }
+
+    java.util.List<String> getReports() {
+        return reports
     }
 }

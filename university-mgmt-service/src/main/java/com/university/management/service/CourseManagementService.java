@@ -1,5 +1,12 @@
 package com.university.management.service;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.university.management.common.model.CourseCreateRequest;
 import com.university.management.common.model.CourseResponse;
 import com.university.management.dao.entity.CourseEntity;
@@ -7,12 +14,8 @@ import com.university.management.dao.repository.CourseRepository;
 import com.university.management.exception.ResourceConflictException;
 import com.university.management.exception.ResourceNotFoundException;
 import com.university.management.transformer.UniversityTransformer;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

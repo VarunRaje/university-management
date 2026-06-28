@@ -1,16 +1,19 @@
 package com.university.management.controller;
 
-import com.university.management.common.api.CoursesApi;
-import com.university.management.common.model.CourseCreateRequest;
-import com.university.management.common.model.CourseResponse;
-import com.university.management.service.CourseManagementService;
 import java.util.List;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.university.management.common.api.CoursesApi;
+import com.university.management.common.model.CourseCreateRequest;
+import com.university.management.common.model.CourseResponse;
+import com.university.management.service.CourseManagementService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1")

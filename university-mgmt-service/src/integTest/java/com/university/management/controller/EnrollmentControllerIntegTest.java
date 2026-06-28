@@ -3,14 +3,15 @@ package com.university.management.controller;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
-import com.university.management.common.model.CourseResponse;
-import com.university.management.common.model.EnrollmentRequest;
-import com.university.management.common.model.EnrollmentResponse;
-import com.university.management.common.model.StudentResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
+
+import com.university.management.common.model.CourseResponse;
+import com.university.management.common.model.EnrollmentRequest;
+import com.university.management.common.model.EnrollmentResponse;
+import com.university.management.common.model.StudentResponse;
 
 public class EnrollmentControllerIntegTest extends AbstractControllerIntegTest {
 

@@ -3,13 +3,9 @@ package com.university.management.controller;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
-import com.university.management.UniversityManagementApplication;
-import com.university.management.common.model.CourseCreateRequest;
-import com.university.management.common.model.CourseResponse;
-import com.university.management.common.model.StudentCreateRequest;
-import com.university.management.common.model.StudentResponse;
 import java.time.LocalDate;
 import java.util.UUID;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -18,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.web.client.RestClient;
+
+import com.university.management.UniversityManagementApplication;
+import com.university.management.common.model.*;
 
 @ActiveProfiles("integtest")
 @SpringBootTest(
@@ -41,7 +40,15 @@ public abstract class AbstractControllerIntegTest extends AbstractTestNGSpringCo
             .firstName("Taylor")
             .lastName("Morgan")
             .email("student-" + suffix + "@example.edu")
-            .dateOfBirth(LocalDate.of(2001, 4, 12));
+            .dateOfBirth(LocalDate.of(2001, 4, 12))
+            .currentAddress(
+                new Address()
+                    .buildingNumber("A-101, Sukhawani Avenues")
+                    .street("East Street")
+                    .city("Pune")
+                    .state("Maharashtra")
+                    .pinCode("411001")
+                    .country("India"));
 
     ResponseEntity<StudentResponse> response =
         restClient()
